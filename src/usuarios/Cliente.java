@@ -1,14 +1,13 @@
-package usuarios;
+package Usuarios;
 import java.time.LocalDate;
+import Usuarios.utils.Rol;
 
-import usuarios.utils.Rol;
 
 public class Cliente extends Usuario {
     private LocalDate fechaDeRegistro;
 
-    public Cliente(String nombre, String apellido) {
-        super(nombre, apellido, Rol.CLIENTE);
-        this.fechaDeRegistro = LocalDate.now();
+    public Cliente(String nombre, String apellido, Rol rol, String contrasena, LocalDate fechaDeRegistro, String nombreUsuario) {
+        super(nombre, apellido, Rol.CLIENTE, fechaDeRegistro, contrasena, nombreUsuario);
     }
 
     public LocalDate getFechaDeRegistro() {

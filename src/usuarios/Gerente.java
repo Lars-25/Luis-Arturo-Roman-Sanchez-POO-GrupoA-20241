@@ -1,17 +1,17 @@
-package usuarios;
+package Usuarios;
 
-import usuarios.utils.Rol;
+import Usuarios.Usuario;
+import Usuarios.utils.Rol;
 import java.time.LocalDate;
 
 public class Gerente extends Usuario {
-    private String jerarquia;
+    private String curp;
     private double salary;
-    private long rfc;
+    private String rfc;
     private LocalDate fechaDeAsenso;
 
-    public Gerente(String nombre, String apellido, String jerarquia, double salary, long rfc) {
-        super(nombre, apellido, Rol.GERENTE);
-        this.jerarquia = jerarquia;
+    public Gerente(String nombre, String apellido, Rol rol, String rfc, double salary, String curp, LocalDate fechaDeAsenso, String contrasena, String nombreUsuario) {
+        super(nombre, apellido, Rol.GERENTE, fechaDeRegistro, contrasena, nombreUsuario);
         this.salary = salary;
         this.rfc = rfc;
         this.fechaDeAsenso = LocalDate.now();
@@ -19,7 +19,7 @@ public class Gerente extends Usuario {
 
     @Override
     public String toString(){
-        return String.format("%sJerarquía: %s\nSalario: %.2f\nRFC: %d\nFecha de asenso: %s", super.toString(), this.jerarquia, this.salary, this.rfc, this.fechaDeAsenso.toString());
+        return String.format("Salario: %.2f\nRFC: %d\nFecha de asenso: %s", super.toString(), this.salary, this.rfc, this.fechaDeAsenso.toString());
     }
 
 }

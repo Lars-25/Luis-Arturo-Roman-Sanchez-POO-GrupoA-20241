@@ -1,15 +1,15 @@
-package suarios;
+package Usuarios;
 
-import usuarios.utils.Rol;
+import Usuarios.utils.Rol;
 import java.time.LocalDate;
 
 public class Trabajador extends Usuario {
-    private long rfc;
+    private String rfc;
     private LocalDate fechaDeContratacion;
     private double salary;
 
-    public Trabajador(String nombre, String apellido, long rfc, double salary) {
-        super(nombre, apellido, Rol.TRABAJADOR);
+    public Trabajador(String nombre, String apellido, Rol rol, String rfc, double salary, LocalDate fechaDeRegistro, LocalDate fechaDeContratacion, String contrasena, String nombreUsuario) {
+        super(nombre, apellido, Rol.TRABAJADOR, fechaDeRegistro, contrasena, nombreUsuario);
         this.rfc = rfc;
         this.salary = salary;
         this.fechaDeContratacion = LocalDate.now();

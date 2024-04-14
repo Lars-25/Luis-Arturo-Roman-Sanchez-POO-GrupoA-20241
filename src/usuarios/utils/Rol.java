@@ -1,4 +1,4 @@
-package utils;
+package Usuarios.utils;
 
 public enum Rol {
     CLIENTE,
