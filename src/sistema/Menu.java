@@ -3,6 +3,7 @@ package sistema;
 import usuarios.*;
 import usuarios.utils.Rol;
 import java.util.Scanner;
+import sistema.utils.DatosComun;
 
 public class Menu {
 
@@ -22,63 +23,18 @@ public class Menu {
 
             switch (opcion) {
                 case 1:
-                    iniciarSesion();
+                    Biblioteca.iniciarSesion();
                     break;
                 case 2:
-                    registrarse();
+                    Biblioteca.registrarse();
                     break;
                 case 3:
                     System.out.println("Gracias por usar el sistema.");
                     System.exit(0);
+                    break;
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
             }
-        }
-    }
-
-    private static void iniciarSesion() {
-        System.out.print("Ingrese su nombre de usuario: ");
-        String nombreUsuario = scanner.nextLine();
-        System.out.print("Ingrese su contraseña: ");
-        String contrasena = scanner.nextLine();
-
-        Usuario usuario = biblioteca.verificarInicioSesion(nombreUsuario, contrasena);
-        if (usuario != null) {
-            usuarioActual = usuario;
-            System.out.println("Inicio de sesión exitoso. Bienvenido " + usuario.getNombre());
-            if (usuario instanceof Cliente) {
-                ejecutarMenuCliente();
-            } else if (usuario instanceof Trabajador) {
-                ejecutarMenuTrabajador();
-            } else if (usuario instanceof Gerente) {
-                ejecutarMenuGerente();
-            }
-        } else {
-            System.out.println("Credenciales incorrectas, por favor intente nuevamente.");
-        }
-    }
-
-    private static void registrarse() {
-        System.out.println("Seleccione el tipo de usuario para registro:");
-        System.out.println("1. Cliente");
-        System.out.println("2. Trabajador");
-        System.out.println("3. Gerente");
-        System.out.print("Opción: ");
-        int tipo = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (tipo) {
-            case 1:
-                biblioteca.registrarCliente();
-                break;
-            case 2:
-                biblioteca.registrarTrabajador();
-                break;
-            case 3:
-                biblioteca.registrarGerente();
-                break;
-            default:
-                System.out.println("Opción no válida, por favor intente nuevamente.");
         }
     }
 
@@ -94,7 +50,7 @@ public class Menu {
 
             switch (option) {
                 case "1":
-                    mostrarInformacionUsuario(usuarioActual);
+                    Biblioteca.mostrarInformacionUsuario(usuarioActual);
                     break;
                 case "2":
                     // Implementar: mostrarPréstamosActivos(usuarioActual);
@@ -125,7 +81,7 @@ public class Menu {
 
             switch (option) {
                 case "1":
-                    biblioteca.registrarCliente();
+                    Cliente.registrarCliente();
                     break;
                 case "2":
                     // Implementar: modificarDatosCliente();
@@ -139,7 +95,7 @@ public class Menu {
                 case "E":
                     System.out.println("Cerrando sesión...");
                     usuarioActual = null;
-                    return;  // Salir del método
+                    return;
                 default:
                     System.out.println("Opción incorrecta, intente nuevamente.");
             }
@@ -160,26 +116,21 @@ public class Menu {
 
             switch (option) {
                 case "1":
-                    mostrarTodosLosUsuarios();
+                    Gerente.mostrarTodosLosUsuarios();
                     break;
                 case "2":
-                    System.out.print("Ingrese el nombre de usuario del empleado: ");
-                    String nombreUsuario = scanner.nextLine();
-                    Usuario usuario = biblioteca.getUsuarioPorNombreUsuario(nombreUsuario);
-                    if (usuario != null) {
-                        mostrarInformacionUsuario(usuario);
-                    } else {
-                        System.out.println("Usuario no encontrado.");
-                    }
                     break;
                 case "3":
-                    biblioteca.registrarTrabajador(); 
+                    Trabajador.registrarTrabajador(); 
                     break;
                 case "4":
                     // Implementar: modificarDatosTrabajador();
                     break;
                 case "5":
-                    // Implementar: eliminarTrabajador();
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("Ingrese el nombre de usuario del trabajador a eliminar:");
+                    String nombreUsuario = scanner.nextLine();
+                    Trabajador.eliminarTrabajador(nombreUsuario);
                     break;
                 case "E":
                     System.out.println("Cerrando sesión...");
@@ -191,18 +142,5 @@ public class Menu {
         } while (!option.equalsIgnoreCase("E"));
     }
 
-    private static void mostrarTodosLosUsuarios() {
-        System.out.println("Listado de todos los usuarios:");
-        for (Rol rol : Rol.values()) {
-            System.out.println("Rol: " + rol);
-            for (Usuario u : biblioteca.getUsuariosPorRol(rol)) {
-                mostrarInformacionUsuario(u);
-            }
-        }
-    }
-
-    private static void mostrarInformacionUsuario(Usuario usuario) {
-        System.out.printf("ID: %d, Nombre: %s, Apellido: %s, Usuario: %s, Rol: %s%n",
-                          usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getNombreUsuario(), usuario.getRol());
-    }
+    
 }

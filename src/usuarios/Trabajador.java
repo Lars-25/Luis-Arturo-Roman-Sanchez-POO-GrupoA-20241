@@ -1,6 +1,10 @@
 package usuarios;
+
 import usuarios.utils.Rol;
 import java.time.LocalDate;
+import sistema.Biblioteca;
+import sistema.utils.DatosComun;
+import java.util.*;
 
 public class Trabajador extends Usuario {
     private String rfc;
@@ -24,6 +28,39 @@ public class Trabajador extends Usuario {
 
     public double getSalario(){
         return salario;
+    }
+
+    // Metodos
+
+
+    public static void registrarTrabajador() {
+        ArrayList<String> datosComun = DatosComun.obtenerDatosComun(Rol.TRABAJADOR);
+        String rfc = DatosComun.obtenerDatoEspecifico("RFC");
+        double salario = DatosComun.obtenerSalario();
+        LocalDate fechaNacimiento = DatosComun.obtenerFecha();
+
+        Trabajador nuevoTrabajador = new Trabajador(
+            datosComun.get(0), // nombre
+            datosComun.get(1), // apellido
+            Rol.TRABAJADOR,
+            rfc,
+            salario,
+            LocalDate.now(), // fecha de registro
+            fechaNacimiento,
+            datosComun.get(2), // numeroTelefono
+            datosComun.get(4), // contrasena
+            datosComun.get(3)  // nombreUsuario
+        );
+
+        Biblioteca.agregarUsuario(Rol.TRABAJADOR, nuevoTrabajador);
+    }
+
+    public static void eliminarTrabajador(String nombreUsuario) {
+        if (DatosComun.nombreUsuarioExiste(nombreUsuario)) {
+            Biblioteca.eliminarUsuario(Rol.TRABAJADOR, nombreUsuario);
+        } else {
+            System.out.println("No se encontró un trabajador con ese nombre de usuario.");
+        }
     }
 
     

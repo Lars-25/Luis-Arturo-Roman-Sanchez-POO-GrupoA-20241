@@ -1,4 +1,5 @@
 package usuarios;
+
 import usuarios.utils.Rol;
 import java.time.LocalDate;
 
