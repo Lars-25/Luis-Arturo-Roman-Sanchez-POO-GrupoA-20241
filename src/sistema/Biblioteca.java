@@ -2,6 +2,8 @@ package sistema;
 
 import usuarios.*;
 import usuarios.utils.Rol;
+import usuarios.utils.UsuarioEnSesion;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +12,7 @@ public class Biblioteca {
 
     private static final Scanner scanner = new Scanner(System.in);
     public static final HashMap<Rol, ArrayList<Usuario>> usuarios = new HashMap<>();
+    private static UsuarioEnSesion usuarioEnSesion = UsuarioEnSesion.getInstancia();
     private static Usuario usuarioActual = null;
 
     public Biblioteca() {
@@ -22,7 +25,8 @@ public class Biblioteca {
         for (ArrayList<Usuario> listaUsuarios : usuarios.values()) {
             for (Usuario usuario : listaUsuarios) {
                 if (usuario.getNombreUsuario().equals(nombreUsuario) && usuario.getContrasena().equals(contrasena)) {
-                    return usuario;
+                    usuarioEnSesion = UsuarioEnSesion.getInstancia();
+                    usuarioEnSesion.setUsuario(usuario);
                 }
             }
         }
@@ -39,6 +43,7 @@ public class Biblioteca {
         if (usuario != null) {
             usuarioActual = usuario;
             System.out.println("Inicio de sesión exitoso. Bienvenido " + usuario.getNombre());
+            Menu.menuUsuarios();
             return usuario;
         } else {
             System.out.println("Credenciales incorrectas, por favor intente nuevamente.");

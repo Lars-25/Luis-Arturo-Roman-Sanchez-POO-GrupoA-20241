@@ -2,6 +2,8 @@ package sistema;
 
 import usuarios.*;
 import usuarios.utils.Rol;
+import usuarios.utils.UsuarioEnSesion;
+
 import java.util.Scanner;
 import sistema.utils.DatosComun;
 
@@ -9,16 +11,18 @@ public class Menu {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final Biblioteca biblioteca = new Biblioteca();
+    private static UsuarioEnSesion usuarioEnSesion = UsuarioEnSesion.getInstancia();
     private static Usuario usuarioActual = null;
 
     public static void ejecutarMenu() {
-        while (true) {
+        int opcion = 1;
+        while (opcion>0 && opcion<3) {
             System.out.println("\nBienvenido al Sistema de la Biblioteca");
             System.out.println("1. Iniciar sesión");
             System.out.println("2. Registrarse");
             System.out.println("3. Salir");
             System.out.print("Seleccione una opción: ");
-            int opcion = scanner.nextInt();
+            opcion = scanner.nextInt();
             scanner.nextLine();
 
             switch (opcion) {
@@ -35,6 +39,16 @@ public class Menu {
                 default:
                     System.out.println("Opción no válida, por favor intente nuevamente.");
             }
+        }
+    }
+
+    public static void menuUsuarios(){
+        if(usuarioEnSesion.getUsuarioActual() instanceof Cliente){
+            ejecutarMenuCliente();
+        }else if(usuarioEnSesion.getUsuarioActual() instanceof Trabajador){
+            ejecutarMenuTrabajador();
+        }else{
+            ejecutarMenuGerente();
         }
     }
 
