@@ -43,8 +43,8 @@ public class Trabajador extends Usuario implements EmpleadoUtils {
         String nombre = datosComun.get(0);
         String apellido = datosComun.get(1);
         String telefono = datosComun.get(2);
-        String nombreUsuarii = datosComun.get(3);
-        String contraseñoa = datosComun.get(4);
+        String nombreUsuario = datosComun.get(3);
+        String contrasena = datosComun.get(4);
 
 
         LocalDate fecha = DatosComun.obtenerFechaNacimiento();
@@ -52,7 +52,7 @@ public class Trabajador extends Usuario implements EmpleadoUtils {
         System.out.println("Finalmente, ingresa su RFC: ");
         String rfc= leer.nextLine();
 
-        Trabajador trabajador = new Trabajador(nombre,apellido,rfc,fecha,telefono,contraseñoa,nombreUsuarii);
+        Trabajador trabajador = new Trabajador(nombre,apellido,rfc,fecha,telefono,contrasena,nombreUsuario);
 
         if (!usuarios.containsKey(Rol.Trabajador)){
             usuarios.put(Rol.Trabajador, new ArrayList<>()); // si es la primera vez q entra un cliente, crea el hashmap con la llave para acceder

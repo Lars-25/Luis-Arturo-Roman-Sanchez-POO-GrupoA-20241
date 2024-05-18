@@ -1,0 +1,29 @@
+{
+  "Gerente": [
+    {
+      "curp": "ROSLA",
+      "id": 1,
+      "nombre": "Luis",
+      "apellido": "Roman",
+      "rol": "Gerente",
+      "fechaNacimineto": "2000-02-02",
+      "contrasena": "Pass",
+      "nombreUsuario": "Lars",
+      "numeroTelefono": "2"
+    }
+  ],
+  "Trabajador": [],
+  "Clientes": [
+    {
+      "fechaRegistro": "2024-05-17",
+      "id": 2,
+      "nombre": "Les",
+      "apellido": "SI",
+      "rol": "Clientes",
+      "fechaNacimineto": "2000-01-01",
+      "contrasena": "Pass",
+      "nombreUsuario": "Les",
+      "numeroTelefono": "12"
+    }
+  ]
+}

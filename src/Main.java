@@ -10,8 +10,7 @@ public class Main {
         Libreria libreria= new Libreria();
         Menu menu= new Menu(libreria);
 
-        libreria.agregarGerente();
-        Menu.iniciarSesion();
+        Menu.mostrarMenu();
 
     }
 }

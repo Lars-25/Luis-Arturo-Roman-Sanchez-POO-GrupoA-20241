@@ -4,13 +4,6 @@ import Usuarios.Usuario;
 
 public class UsuarioEnSesion {
 
-    /*
-    MUST- Registro de cliente, trabajador y gerente, y consulta de ellos
-    MUST- Consulta de todos los usuarios, consulta de un usuario individual
-    NICE TO HAVE- Tratar de implementar el inicio de sesion con el SINGLETON
-     */
-
-
     private static UsuarioEnSesion instancia;
     private static Usuario usuario;
 

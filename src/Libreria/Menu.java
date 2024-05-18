@@ -1,6 +1,7 @@
 package Libreria;
 
 import Usuarios.Usuario;
+import Usuarios.utils.Rol;
 import Utils.UsuarioEnSesion;
 
 import java.util.ArrayList;
@@ -11,20 +12,91 @@ import java.util.Scanner;
 public class Menu {
 
     public static Scanner leer = new Scanner(System.in);
-    private static Libreria libreria; // Agregar esta variable
+    private static Libreria libreria;
 
     public Menu(Libreria libreria) {
         Menu.libreria = libreria;
     }
-    // Cliente
-    // Ver sus rentas, su info, ver ibros que estan disponibles
 
-    // Trabajador
-    // Registrar clientes y libros
+    public static void mostrarMenu() {
+        while (true) {
+            System.out.println("1. Registrar");
+            System.out.println("2. Iniciar Sesion");
+            System.out.println("E. Salir");
+            System.out.println("Elige una opción: ");
 
-    // Gerente
+            String opcion = leer.nextLine();
 
-    // Todo lo del trabajador mas el registro de las renta
+            switch (opcion) {
+                case "1":
+                    registrar();
+                    break;
+                case "2":
+                    iniciarSesion();
+                    break;
+                case "E":
+                    libreria.librosAGson();
+                    libreria.usuariosAGson();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Opción incorrecta");
+                    break;
+            }
+        }
+    }
+
+    public static void registrar() {
+        System.out.println("Seleccione el tipo de usuario a registrar: ");
+        System.out.println("1. Cliente");
+        System.out.println("2. Trabajador");
+        System.out.println("3. Gerente");
+        String opcion = leer.nextLine();
+
+        switch (opcion) {
+            case "1":
+                libreria.agregarCliente();
+                break;
+            case "2":
+                libreria.agregarTrabajador();
+                break;
+            case "3":
+                libreria.agregarGerente();
+                break;
+            default:
+                System.out.println("Opción incorrecta");
+                break;
+        }
+    }
+
+    private static String obtenerNombreUsuario() {
+        boolean nombreUsuarioExistente;
+        String nombreUsuario;
+        do {
+            System.out.println("Ingrese el nombre de usuario: ");
+            nombreUsuario = leer.nextLine();
+            nombreUsuarioExistente = libreria.nombreUsuarioExistente(nombreUsuario);
+            if (nombreUsuarioExistente) {
+                System.out.println("El nombre de usuario ya existe. Inténtalo de nuevo.");
+            }
+        } while (nombreUsuarioExistente);
+        return nombreUsuario;
+    }
+
+    private static String obtenerNumeroTelefono() {
+        boolean numeroExistente;
+        String telefono;
+        do {
+            System.out.println("Ingrese el número de teléfono: ");
+            telefono = leer.nextLine();
+            numeroExistente = libreria.numeroTelefonoExistente(telefono);
+            if (numeroExistente) {
+                System.out.println("El número de teléfono ya existe. Inténtalo de nuevo.");
+            }
+        } while (numeroExistente);
+        return telefono;
+    }
+
 
     public static void iniciarSesion() {
 
@@ -47,9 +119,13 @@ public class Menu {
             if (actual != null && cont < 5) {
                 UsuarioEnSesion.getInstancia().setUsuario(actual);
                 seleccionarMenu();
+                cont = 0;
             } else if (cont >= 5) {
                 System.out.println("INTENTOS TERMINADOS, TERMINANDO EL PROGRAMA. ");
                 datoscorrectos = true;
+                libreria.librosAGson();
+                libreria.usuariosAGson();
+                System.exit(0);
             } else {
                 System.out.println("DATOS INCCORRECTOS. ");
             }
@@ -61,7 +137,7 @@ public class Menu {
     private static void registrarLibroMenu(){
         Scanner sc = new Scanner(System.in);
         int opcion = 0;
-        boolean esDatoValido = false;
+        boolean esDatoValido = false, accion=true;
 
         do {
             System.out.println("OPCION DE REGISTRAR UN LIBRO. ");
@@ -98,17 +174,18 @@ public class Menu {
                     libreria.registrarAccion();
                     break;
                 case 4:
+                    accion=false;
                     break;
             }
 
 
-        }while (true);
+        }while (accion);
     }
+
 
     private static void seleccionarMenu() {
         switch (UsuarioEnSesion.getInstancia().getUsuarioActual().getRol()) {
-            case Gerente ->
-                    ejecutarMenuGerente(); //la flechita es una funcion lambda, sirve en versiones de java mas actuales
+            case Gerente -> ejecutarMenuGerente();
             case Trabajador -> ejecutarMenuTrabajador();
             case Clientes -> ejecutarMenuCliente();
         }

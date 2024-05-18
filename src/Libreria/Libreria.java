@@ -9,15 +9,20 @@ import Usuarios.Gerente;
 import Usuarios.Trabajador;
 import Usuarios.Usuario;
 import Usuarios.utils.Rol;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
 public class Libreria {
     @SuppressWarnings("RawTypes")
-    public static HashMap<Rol,ArrayList<Usuario>> usuarios = new HashMap<>(); //el rol es la llave, el arraylist es el valor que se le da a cada llave
+    public static HashMap<Rol,ArrayList<Usuario>> usuarios = new HashMap<>();
     public static HashMap<Genero,ArrayList<Libro>> libros = new HashMap<>();
-
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public Libreria (){
         inicializarLlaves();
@@ -75,6 +80,32 @@ public class Libreria {
             }
         }
         return null;
+    }
+
+    public void registrarUsuario(Usuario usuario) {
+        usuarios.get(usuario.getRol()).add(usuario);
+    }
+
+    public boolean nombreUsuarioExistente(String nombreUsuario) {
+        for (ArrayList<Usuario> listaUsuarios : usuarios.values()) {
+            for (Usuario usuario : listaUsuarios) {
+                if (usuario.getNombreUsuario().equals(nombreUsuario)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean numeroTelefonoExistente(String numeroTelefono) {
+        for (ArrayList<Usuario> listaUsuarios : usuarios.values()) {
+            for (Usuario usuario : listaUsuarios) {
+                if (usuario.getNumeroTelefono().equals(numeroTelefono)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void eliminarUsuario(Usuario usuario){
@@ -147,6 +178,26 @@ public class Libreria {
 
     public void mostrarUsuario (Usuario usuario){
         Usuario.mostrarUsuario(usuario);
+    }
+
+    public void usuariosAGson(){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("usuarios.json")); //nos permite escribir en el archivo
+            gson.toJson(usuarios, writer); //convierte el estudiante a json y lo escribe
+            writer.close(); //cierra el escritorr,  si no se cierra no se escribe nada
+        } catch (IOException e){
+            System.out.println("e");
+        }
+    }
+
+    public void librosAGson(){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("libros.json")); //nos permite escribir en el archivo
+            gson.toJson(libros, writer); //convierte el estudiante a json y lo escribe
+            writer.close(); //cierra el escritorr,  si no se cierra no se escribe nada
+        } catch (IOException e){
+            System.out.println("e");
+        }
     }
 
 

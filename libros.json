@@ -1,0 +1,17 @@
+{
+  "Comedia": [],
+  "Terror": [
+    {
+      "subGeneroTerror": "Psicologico",
+      "id": 1,
+      "titulo": "Ld",
+      "autor": "dw",
+      "editorial": "wd",
+      "fecha": "2000-02-02",
+      "genero": "Terror",
+      "precio": 2.0,
+      "stock": 2
+    }
+  ],
+  "Accion": []
+}
