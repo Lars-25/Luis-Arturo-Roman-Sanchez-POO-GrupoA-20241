@@ -1,9 +1,14 @@
 package Libreria;
+
 import Libreria.Libros.Constantes.Genero;
 import Libreria.Libros.Libro;
 import Libreria.Libros.LibroAccion;
 import Libreria.Libros.LibroComedia;
 import Libreria.Libros.LibroTerror;
+import Serializers.LibroDeserializer;
+import Serializers.LibroSerializer;
+import Serializers.UsuarioDeserializer;
+import Serializers.UsuarioSerializer;
 import Usuarios.Cliente;
 import Usuarios.Gerente;
 import Usuarios.Trabajador;
@@ -12,9 +17,6 @@ import Usuarios.utils.Rol;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -115,25 +117,19 @@ public class Libreria {
 
     public void agregarCliente(){
         Cliente.agregarCliente();
-
     }
 
     public void agregarTrabajador(){
         Trabajador.agregarTrabajador();
-
-
     }
 
     public void agregarGerente(){
         Gerente.agregarGerente();
-
     }
 
     public void actualizarInfo(Usuario user){
         Usuario.actualizarDatosComun(user);
     }
-
-
 
     public void mostrarUsuarios(){
         Usuario.mostrarUsuarios();
@@ -160,9 +156,6 @@ public class Libreria {
 
 
 
-
-
-
     public void mostrarGerente(Gerente gerente){
         Gerente.mostrarGerente(gerente);
     }
@@ -180,27 +173,14 @@ public class Libreria {
         Usuario.mostrarUsuario(usuario);
     }
 
-    public void usuariosAGson(){
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("usuarios.json")); //nos permite escribir en el archivo
-            gson.toJson(usuarios, writer); //convierte el estudiante a json y lo escribe
-            writer.close(); //cierra el escritorr,  si no se cierra no se escribe nada
-        } catch (IOException e){
-            System.out.println("e");
-        }
+    public void guardarJson(){
+        LibroSerializer.LibroSerializer();
+        UsuarioSerializer.UsuarioSerializer();
     }
 
-    public void librosAGson(){
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("libros.json")); //nos permite escribir en el archivo
-            gson.toJson(libros, writer); //convierte el estudiante a json y lo escribe
-            writer.close(); //cierra el escritorr,  si no se cierra no se escribe nada
-        } catch (IOException e){
-            System.out.println("e");
-        }
+    public void leerJson(){
+        LibroDeserializer.LibroDeserealizer();
+        UsuarioDeserializer.UsuarioDeserializer();
     }
-
-
-
 
 }

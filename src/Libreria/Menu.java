@@ -20,6 +20,7 @@ public class Menu {
 
     public static void mostrarMenu() {
         while (true) {
+            System.out.println("BIENVENIDO AL SISTEMA DE LA BIBLIOTECA.");
             System.out.println("1. Registrar");
             System.out.println("2. Iniciar Sesion");
             System.out.println("E. Salir");
@@ -35,8 +36,7 @@ public class Menu {
                     iniciarSesion();
                     break;
                 case "E":
-                    libreria.librosAGson();
-                    libreria.usuariosAGson();
+                    libreria.guardarJson();
                     System.exit(0);
                     break;
                 default:
@@ -123,8 +123,7 @@ public class Menu {
             } else if (cont >= 5) {
                 System.out.println("INTENTOS TERMINADOS, TERMINANDO EL PROGRAMA. ");
                 datoscorrectos = true;
-                libreria.librosAGson();
-                libreria.usuariosAGson();
+                libreria.guardarJson();
                 System.exit(0);
             } else {
                 System.out.println("DATOS INCCORRECTOS. ");
@@ -210,6 +209,8 @@ public class Menu {
                     break;
                 case "E":
                     UsuarioEnSesion.getInstancia().cerrarSesion();
+                    libreria.librosAGson();
+                    libreria.usuariosAGson();
                     iniciarSesion();
                     break;
                 default:
